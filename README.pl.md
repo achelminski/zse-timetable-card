@@ -4,7 +4,8 @@
 
 Karta Lovelace pokazująca plan lekcji w układzie strony VULCAN Optivum (Nr | Godz | Poniedziałek … Piątek), z danych
 `sensor.timetable_*` integracji [zse_timetable](https://github.com/achelminski/zse-timetable).
-Komórka: przedmiot (pogrubiony) / klasa z grupą / sala, wyrównane do lewej; zastępstwa wyróżnione kolorem
+Komórka: przedmiot (pogrubiony) / klasa z grupą / sala, wyrównane do lewej; zastępstwa wyróżnione kolorem,
+w pierwszej linii nieobecny nauczyciel („Zastępstwo za J. Kowalski”, wymaga zse_timetable ≥ 1.3.0)
 (dymek: za kogo, uwagi). Pod tabelą cała linia „Obowiązuje od: …” ze strony szkoły.
 
 ## Instalacja

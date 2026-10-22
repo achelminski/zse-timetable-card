@@ -4,7 +4,8 @@
 
 Lovelace card showing a school timetable in the VULCAN Optivum layout (No. | Time | Monday … Friday), with data from
 `sensor.timetable_*` of the [zse_timetable](https://github.com/achelminski/zse-timetable) integration.
-Each cell shows subject (bold) / class with group / room, left-aligned; substitutions are highlighted in colour
+Each cell shows subject (bold) / class with group / room, left-aligned; substitutions are highlighted in colour,
+the first line names the absent teacher (“Substitution for J. Kowalski”, requires zse_timetable ≥ 1.3.0)
 (tooltip: who is being covered, notes). Below the table: the whole “Obowiązuje od: …” line from the school page.
 
 ## Installation

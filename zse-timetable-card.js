@@ -9,7 +9,7 @@
  * substitution_color: "#e53935" # opcjonalnie
  */
 
-const PLC_VERSION = "1.3.0";
+const PLC_VERSION = "1.4.0";
 const PLC_I18N = {
   pl: {
     days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
@@ -24,6 +24,7 @@ const PLC_I18N = {
     today: "Dziś",
     tomorrow: "Jutro",
     substitution: "Zastępstwo",
+    substitution_for: "Zastępstwo za",
     absent: "Za",
     notes: "Uwagi",
     no_entity: "Brak encji",
@@ -49,6 +50,7 @@ const PLC_I18N = {
     today: "Today",
     tomorrow: "Tomorrow",
     substitution: "Substitution",
+    substitution_for: "Substitution for",
     absent: "Covering for",
     notes: "Notes",
     no_entity: "Entity not found",
@@ -62,6 +64,13 @@ const PLC_I18N = {
     card_desc: "Teacher timetable in the VULCAN Optivum layout (sensor.timetable_* from zse_timetable)",
   },
 };
+
+/** First line of a substitution: "Zastępstwo za J. Kowalski" (absent_teacher from zse_timetable >= 1.3.0). */
+function plcSubstitutionLabel(t, absent) {
+  if (!absent?.last_name) return t.substitution;
+  const initial = absent.first_name ? `${absent.first_name[0]}. ` : "";
+  return `${t.substitution_for} ${initial}${absent.last_name}`;
+}
 
 /** Card language: the HA user's language; without hass (editor, card picker) — the browser's. */
 function plcLang(hass) {
@@ -333,7 +342,7 @@ class ZseTimetableCard extends HTMLElement {
       : "";
     return `
       <div class="lesson${sub ? " sub" : ""}"${tooltip ? ` title="${plcEsc(tooltip)}"` : ""}>
-        <div class="subject">${plcEsc(sub ? t.substitution : lesson.subject)}</div>
+        <div class="subject">${plcEsc(sub ? plcSubstitutionLabel(t, lesson.absent_teacher) : lesson.subject)}</div>
         ${lesson.group ? `<div class="group">${plcEsc(lesson.group)}</div>` : ""}
         ${lesson.room ? `<div class="room">${plcEsc(lesson.room)}</div>` : ""}
       </div>`;
