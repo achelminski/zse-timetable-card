@@ -9,7 +9,7 @@
  * substitution_color: "#e53935" # opcjonalnie
  */
 
-const PLC_VERSION = "1.4.0";
+const PLC_VERSION = "1.4.1";
 const PLC_I18N = {
   pl: {
     days: ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"],
@@ -343,8 +343,9 @@ class ZseTimetableCard extends HTMLElement {
     return `
       <div class="lesson${sub ? " sub" : ""}"${tooltip ? ` title="${plcEsc(tooltip)}"` : ""}>
         <div class="subject">${plcEsc(sub ? plcSubstitutionLabel(t, lesson.absent_teacher) : lesson.subject)}</div>
-        ${lesson.group ? `<div class="group">${plcEsc(lesson.group)}</div>` : ""}
-        ${lesson.room ? `<div class="room">${plcEsc(lesson.room)}</div>` : ""}
+        ${lesson.group || lesson.room
+          ? `<div class="meta">${[lesson.group, lesson.room].filter(Boolean).map(plcEsc).join(" · ")}</div>`
+          : ""}
       </div>`;
   }
 
@@ -412,7 +413,7 @@ class ZseTimetableCard extends HTMLElement {
         .lesson { text-align: left; line-height: 1.3; padding: 1px 3px; border-left: 3px solid transparent; }
         .lesson + .lesson { border-top: 1px dashed var(--plc-border); margin-top: 3px; padding-top: 3px; }
         .subject { font-weight: bold; }
-        .group, .room { color: var(--plc-meta-fg); }
+        .meta { color: var(--plc-meta-fg); }
         .lesson.sub { background: color-mix(in srgb, var(--plc-sub) 18%, transparent); border-left-color: var(--plc-sub); border-radius: 2px; }
         .lesson.sub .subject { color: var(--plc-sub); }
         .msg { padding: 16px; color: var(--secondary-text-color); }
